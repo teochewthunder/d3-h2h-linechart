@@ -6,171 +6,210 @@
 	<body>
 
 		<script>
-			let matches = 
-			[
-				2018: 
-				[
+			let h2h = 
+			{
+				data: 
+				{
+					2018: 
+					[
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 4},
+							"Away": { "Team": "Arsenal", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 3},
+							"Away": { "Team": "Liverpool", "Goals" : 3}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 3},
+							"Away": { "Team": "Arsenal", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 0},
+							"Away": { "Team": "Manchester City", "Goals" : 3}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 5},
+							"Away": { "Team": "Liverpool", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 4},
+							"Away": { "Team": "Manchester City", "Goals" : 3}
+						}					
+					],
+					2019: 
+					[
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 5},
+							"Away": { "Team": "Arsenal", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 1},
+							"Away": { "Team": "Liverpool", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 3},
+							"Away": { "Team": "Arsenal", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 0},
+							"Away": { "Team": "Manchester City", "Goals" : 2}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 2},
+							"Away": { "Team": "Liverpool", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 0},
+							"Away": { "Team": "Manchester City", "Goals" : 0}
+						}					
+					],
+					2020: 
+					[
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 3},
+							"Away": { "Team": "Arsenal", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 2},
+							"Away": { "Team": "Liverpool", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 3},
+							"Away": { "Team": "Arsenal", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 0},
+							"Away": { "Team": "Manchester City", "Goals" : 3}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 4},
+							"Away": { "Team": "Liverpool", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 1},
+							"Away": { "Team": "Manchester City", "Goals" : 3}
+						}					
+					],
+					2021: 
+					[
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 3},
+							"Away": { "Team": "Arsenal", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 0},
+							"Away": { "Team": "Liverpool", "Goals" : 3}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 1},
+							"Away": { "Team": "Arsenal", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 0},
+							"Away": { "Team": "Manchester City", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 1},
+							"Away": { "Team": "Liverpool", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 1},
+							"Away": { "Team": "Manchester City", "Goals" : 4}
+						}					
+					],
+					2022: 
+					[
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 4},
+							"Away": { "Team": "Arsenal", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 0},
+							"Away": { "Team": "Liverpool", "Goals" : 2}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 5},
+							"Away": { "Team": "Arsenal", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 1},
+							"Away": { "Team": "Manchester City", "Goals" : 2}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 2},
+							"Away": { "Team": "Liverpool", "Goals" : 2}
+						},
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 2},
+							"Away": { "Team": "Manchester City", "Goals" : 2}
+						}					
+					],
+					2023: 
+					[
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 1},
+							"Away": { "Team": "Arsenal", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 3},
+							"Away": { "Team": "Liverpool", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 0},
+							"Away": { "Team": "Arsenal", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Arsenal", "Goals" : 1},
+							"Away": { "Team": "Manchester City", "Goals" : 0}
+						},
+						{
+							"Home": { "Team": "Manchester City", "Goals" : 1},
+							"Away": { "Team": "Liverpool", "Goals" : 1}
+						},
+						{
+							"Home": { "Team": "Liverpool", "Goals" : 1},
+							"Away": { "Team": "Manchester City", "Goals" : 1}
+						}					
+					]
+				},
+				currentData: [],
+				getData: function()
+				{
+					var team1 = "Liverpool";
+					var team2 = "Arsenal";
+					this.currentData = [];
+
+					if (team1 == team2) return;
+
+					for (var season = 2018; season <= 2023; season ++)
 					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					}					
-				],
-				2019: 
-				[
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					}					
-				],
-				2020: 
-				[
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					}					
-				],
-				2021: 
-				[
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					}					
-				],
-				2022: 
-				[
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Liverpool", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 0},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					}					
-				],
-				2023: 
-				[
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 1},
-						"Away": { "Team": "Arsenal", "Goals" : 1}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 3},
-						"Away": { "Team": "Liverpool", "Goals" : 1}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 0},
-						"Away": { "Team": "Arsenal", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Arsenal", "Goals" : 1},
-						"Away": { "Team": "Manchester City", "Goals" : 0}
-					},
-					{
-						"Home": { "Team": "Manchester City", "Goals" : 1},
-						"Away": { "Team": "Liverpool", "Goals" : 1}
-					},
-					{
-						"Home": { "Team": "Liverpool", "Goals" : 1},
-						"Away": { "Team": "Manchester City", "Goals" : 1}
-					}					
-				],
-			]
+						for (var i = 0; i < this.data[season].length; i++)
+						{
+							var h = this.data[season][i].Home;
+							var a = this.data[season][i].Away;
+							var score1 = 0;
+							var score2 = 0;
+
+							if (!((h.Team == team1 && a.Team == team2) || (h.Team == team2 && a.Team == team1))) continue;
+
+							if (h.Team == team1) 
+							{
+								score1 = h.Goals;
+								score2 = a.Goals;
+							}
+
+							if (h.Team == team2) 
+							{
+								score1 = a.Goals;
+								score2 = h.Goals;
+							}
+
+							this.currentData.push({ "season": season, "team1": team1, "team2": team2, "score1": score1, "score2": score2});
+						}
+					}
+				}
+			}
 
 		</script>
 	</body>
