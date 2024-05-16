@@ -2,23 +2,52 @@
 <html>
 	<head>
 		<title>Head-to-head Line CHart</title>
+
+		<style>
+
+		</style>
+
+		<script src="https://d3js.org/d3.v4.min.js"></script>
 	</head>
 	<body>
 		<div>
-			<svg>
+			<div>
+				<div class="left">
+					<div class="teamLogo" id="team1Logo">
+						
+					</div>
 
-			</svg>
+	                <select class="ddlTeam" id="ddlTeam1">
+
+	                </select>
+				</div>
+				<div class="right">
+					<div class="teamLogo" id="team2Logo">
+						
+					</div>
+
+	                <select class="ddlTeam" id="ddlTeam2">
+
+	                </select>
+				</div>
+			</div>
+
+			<div>
+				<svg>
+
+				</svg>				
+			</div>
 		</div>
 
 		<script>
 			let h2h = 
 			{
 				teams: 
-				{
-					"Arsenal": { "color": "FFAAAA"},
-					"Manchester City": { "color": "AAFFAA"},
-					"Liverpool": { "color": "AA0000"}
-				},
+				[
+					{ "name": "Arsenal", "color": "FFAAAA", "logo": ""},
+					{ "name": "Manchester City", "color": "AAFFAA", "logo": ""},
+					{ "name": "Liverpool", "color": "AA0000", "logo": ""}
+				],
 				data: 
 				{
 					2018: 
@@ -219,12 +248,27 @@
 							this.currentData.push({ "season": season, "team1": team1, "team2": team2, "score1": score1, "score2": score2});
 						}
 					}
-
-					console.log(this.currentData);
 				}	
 			};
 
-			h2h.getData();
-		</script>
+	        var ddlTeam1 = d3.select(".ddlTeam");
+
+	        ddlTeam1.selectAll("option")
+	        .data(h2h.teams)
+	        .enter()
+	        .append("option")
+	        .property("selected", function(d, i) 
+	        {
+	            return i == 0;
+	        })
+	        .attr("value", function(d) 
+	        {
+	            return d.name;
+	        })
+	        .text(function(d) 
+	        {
+	            return d.name;
+        	});
+        </script>
 	</body>
 </html>
