@@ -17,7 +17,7 @@
 						
 					</div>
 
-	                <select class="ddlTeam" id="ddlTeam1">
+	                <select class="ddlTeam" id="ddlTeam1" onchange="h2h.changeTeams()">
 
 	                </select>
 				</div>
@@ -26,7 +26,7 @@
 						
 					</div>
 
-	                <select class="ddlTeam" id="ddlTeam2">
+	                <select class="ddlTeam" id="ddlTeam2" onchange="h2h.changeTeams()">
 
 	                </select>
 				</div>
@@ -216,6 +216,9 @@
 				currentData: [],
 				getData: function()
 				{
+					var ddlTeam1 = d3.select("#ddlTeam1");
+					var ddlTeam2 = d3.select("#ddlTeam");
+
 					var team1 = "Liverpool";
 					var team2 = "Arsenal";
 					this.currentData = [];
@@ -248,12 +251,46 @@
 							this.currentData.push({ "season": season, "team1": team1, "team2": team2, "score1": score1, "score2": score2});
 						}
 					}
-				}	
+				},
+				changeTeams: function()
+				{
+					var imgTeam1 = d3.select("#team1Logo");
+					var ddlTeam1 = d3.select("#ddlTeam1");
+
+					var imgTeam2 = d3.select("#team2Logo");
+					var ddlTeam2 = d3.select("#ddlTeam2");
+
+					//imgTeam1.attr("style", ddlTeam1.val());
+					//imgTeam2.attr("style", ddlTeam1.val());
+					console.log(ddlTeam1.node().value, ddlTeam2.node().value);
+
+					this.getData();
+
+					this.renderLineChart();
+				},
+				renderLineChart: function()
+				{
+					this.renderScale();
+					this.renderAxis();
+					this.renderPlots();
+				},
+				renderScale: function()
+				{
+
+				},
+				renderAxis: function()
+				{
+
+				},
+				renderPlots: function()
+				{
+
+				}
 			};
 
-	        var ddlTeam1 = d3.select(".ddlTeam");
+	        var ddlTeam = d3.selectAll(".ddlTeam");
 
-	        ddlTeam1.selectAll("option")
+	        ddlTeam.selectAll("option")
 	        .data(h2h.teams)
 	        .enter()
 	        .append("option")
