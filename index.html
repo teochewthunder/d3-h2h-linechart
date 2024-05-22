@@ -4,39 +4,84 @@
 		<title>Head-to-head Line CHart</title>
 
 		<style>
+			div { outline:  1px solid red; }
 
+			#teamsContainer
+			{
+				width: 800px;
+				height: 200px;
+				margin:  0 auto 0 auto;
+			}
+
+			.left
+			{
+				width: 49%;
+				float: left;
+			}
+
+			.right
+			{
+				width: 49%;
+				float: right;
+			}
+
+			.teamLogo
+			{
+				width: 80%;
+				height: 150px;
+				margin:  0 auto 0 auto;
+				background-repeat: no-repeat;
+				background-size: contain;
+				background-position: 50% 50%;
+			}
+
+			.ddlTeam
+			{
+				width: 80%;
+				height: 20%;
+				text-align: center;
+				margin:  0 auto 0 auto;
+				border-radius: 3px;
+				padding: 2px;
+				display: block;
+			}
+
+			#chartContainer
+			{
+				width: 800px;
+				height: 400px;
+				margin:  0 auto 0 auto;
+			}
 		</style>
 
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 	</head>
 	<body>
-		<div>
-			<div>
-				<div class="left">
-					<div class="teamLogo" id="team1Logo">
-						
-					</div>
-
-	                <select class="ddlTeam" id="ddlTeam1" onchange="h2h.changeTeams()">
-
-	                </select>
+		<div id="teamsContainer">
+			<div class="left">
+				<div class="teamLogo" id="team1Logo">
+					
 				</div>
-				<div class="right">
-					<div class="teamLogo" id="team2Logo">
-						
-					</div>
+				<br />
+                <select class="ddlTeam" id="ddlTeam1" onchange="h2h.changeTeams()">
 
-	                <select class="ddlTeam" id="ddlTeam2" onchange="h2h.changeTeams()">
-
-	                </select>
+                </select>
+			</div>
+			<div class="right">
+				<div class="teamLogo" id="team2Logo">
+					
 				</div>
-			</div>
+				<br />
+                <select class="ddlTeam" id="ddlTeam2" onchange="h2h.changeTeams()">
 
-			<div>
-				<svg>
-
-				</svg>				
+                </select>
 			</div>
+		</div>
+
+		<div id="chartContainer">
+			<svg>
+
+			</svg>				
 		</div>
 
 		<script>
@@ -44,9 +89,9 @@
 			{
 				teams: 
 				[
-					{ "name": "Arsenal", "color": "FFAAAA", "logo": ""},
-					{ "name": "Manchester City", "color": "AAFFAA", "logo": ""},
-					{ "name": "Liverpool", "color": "AA0000", "logo": ""}
+					{ "name": "Arsenal", "color": "FFAAAA", "logo": "arsenal.png"},
+					{ "name": "Manchester City", "color": "AAFFAA", "logo": "manchestercity.png"},
+					{ "name": "Liverpool", "color": "AA0000", "logo": "liverpool.png"}
 				],
 				data: 
 				{
@@ -260,8 +305,12 @@
 					var imgTeam2 = d3.select("#team2Logo");
 					var ddlTeam2 = d3.select("#ddlTeam2");
 
-					//imgTeam1.attr("style", ddlTeam1.val());
-					//imgTeam2.attr("style", ddlTeam1.val());
+					for (var i = 0; i < this.teams.length; i++) 
+					{
+						if (ddlTeam1.node().value == this.teams[i].name) imgTeam1.attr("style", "background-image: url(" + this.teams[i].logo + ")");
+						if (ddlTeam2.node().value == this.teams[i].name)imgTeam2.attr("style", "background-image: url(" + this.teams[i].logo + ")");
+					}
+
 					console.log(ddlTeam1.node().value, ddlTeam2.node().value);
 
 					this.getData();
@@ -306,6 +355,8 @@
 	        {
 	            return d.name;
         	});
+
+        	h2h.changeTeams();
         </script>
 	</body>
 </html>
