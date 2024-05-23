@@ -46,11 +46,32 @@
 				display: block;
 			}
 
-			#chartContainer
+			#chartContainer, svg
 			{
 				width: 800px;
 				height: 400px;
 				margin:  0 auto 0 auto;
+			}
+
+			.scale, .tick
+			{
+                stroke: rgba(50, 50, 50, 1);
+                stroke-width: 1px;
+			}
+
+			.label
+			{
+
+			}
+
+			.line
+			{
+                stroke-width: 2px;
+			}
+
+			.node
+			{
+				r: 2px;
 			}
 		</style>
 
@@ -311,8 +332,6 @@
 						if (ddlTeam2.node().value == this.teams[i].name)imgTeam2.attr("style", "background-image: url(" + this.teams[i].logo + ")");
 					}
 
-					console.log(ddlTeam1.node().value, ddlTeam2.node().value);
-
 					this.getData();
 
 					this.renderLineChart();
@@ -325,15 +344,15 @@
 				},
 				renderScale: function()
 				{
-
+					if (this.currentData.length == 0) return;
 				},
 				renderAxis: function()
 				{
-
+					if (this.currentData.length == 0) return;
 				},
 				renderPlots: function()
 				{
-
+					if (this.currentData.length == 0) return;
 				}
 			};
 
