@@ -46,14 +46,14 @@
 				display: block;
 			}
 
-			#chartContainer, svg
+			#chartContainer, #chart
 			{
 				width: 800px;
 				height: 400px;
 				margin:  0 auto 0 auto;
 			}
 
-			.scale, .tick
+			.axis_x, .x_tick, .axis_y, .y_tick
 			{
                 stroke: rgba(50, 50, 50, 1);
                 stroke-width: 1px;
@@ -100,7 +100,7 @@
 		</div>
 
 		<div id="chartContainer">
-			<svg>
+			<svg id="chart">
 
 			</svg>				
 		</div>
@@ -338,17 +338,74 @@
 				},
 				renderLineChart: function()
 				{
-					this.renderScale();
-					this.renderAxis();
+					var chart = d3.selectAll("#chart");
+					chart.html("");
+console.log(this.currentData)
+					if (this.currentData.length == 0) return;
+
+					this.renderAxis_x();
+					this.renderAxis_y();
 					this.renderPlots();
 				},
-				renderScale: function()
+				renderAxis_x: function()
 				{
-					if (this.currentData.length == 0) return;
-				},
-				renderAxis: function()
+					var chart = d3.selectAll("#chart");
+
+					chart
+			        .append("line")
+			        .attr("class", "axis_x")
+			        .attr("x1", "20px")
+			        .attr("y1", "380px")
+			        .attr("x2", "780px")
+			        .attr("y2", "380px");
+
+					chart.selectAll("line.x_tick")
+	        		.data(h2h.currentData)
+	        		.enter()
+			        .append("line")
+			        .attr("class", "x_tick")
+			        .attr("style", function(d, i)
+			        {
+			        	return (i == 0 || i % 2 == 0 ? "visibility:hidden" : "");
+			        })
+			        .attr("x1", function(d, i)
+			        {
+			        	return (20 + (i * Math.floor(760 / h2h.currentData.length ))) + "px";
+			        })
+			        .attr("y1", "380px")
+			        .attr("x2", function(d, i)
+			        {
+			        	return (20 + (i * Math.floor(760 / h2h.currentData.length ))) + "px";
+			        })
+			        .attr("y2", "390px");
+			    },
+				renderAxis_y: function()
 				{
-					if (this.currentData.length == 0) return;
+					var chart = d3.selectAll("#chart");
+
+					chart
+			        .append("line")
+			        .attr("class", "axis_y")
+			        .attr("x1", "20px")
+			        .attr("y1", "20px")
+			        .attr("x2", "20px")
+			        .attr("y2", "380px");	
+
+					chart.selectAll("line.y_tick")
+	        		.data([1, 2, 3, 4, 5, 6, 7, 8])
+	        		.enter()
+			        .append("line")
+			        .attr("class", "y_tick")
+			        .attr("x1", "20px")
+			        .attr("y1", function(d)
+			        {
+			        	return (380 - (d * 40)) + "px";
+			        })
+			        .attr("x2", "10px")
+			        .attr("y2", function(d)
+			        {
+			        	return (380 - (d * 40)) + "px";
+			        });
 				},
 				renderPlots: function()
 				{
