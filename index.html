@@ -59,9 +59,11 @@
                 stroke-width: 1px;
 			}
 
-			.label
+			.x_label, .y_label
 			{
-
+      			font: bold 10px arial;
+      			fill: rgba(0, 0, 0, 0.5);
+                text-anchor: middle;
 			}
 
 			.line
@@ -280,13 +282,14 @@
 					]
 				},
 				currentData: [],
+				margin: 40,
 				getData: function()
 				{
 					var ddlTeam1 = d3.select("#ddlTeam1");
-					var ddlTeam2 = d3.select("#ddlTeam");
+					var ddlTeam2 = d3.select("#ddlTeam2");
 
-					var team1 = "Liverpool";
-					var team2 = "Arsenal";
+					var team1 = ddlTeam1.node().value;
+					var team2 = ddlTeam2.node().value;
 					this.currentData = [];
 
 					if (team1 == team2) return;
@@ -317,6 +320,14 @@
 							this.currentData.push({ "season": season, "team1": team1, "team2": team2, "score1": score1, "score2": score2});
 						}
 					}
+				},
+				getHorizontalSpacing: function(maxSeasons)
+				{
+					return Math.floor((800 - h2h.margin - h2h.margin) / maxSeasons);
+				},
+				getVerticalSpacing: function(maxGoals)
+				{
+					return Math.floor((400 - h2h.margin - h2h.margin) / maxGoals);
 				},
 				changeTeams: function()
 				{
@@ -354,10 +365,12 @@ console.log(this.currentData)
 					chart
 			        .append("line")
 			        .attr("class", "axis_x")
-			        .attr("x1", "20px")
-			        .attr("y1", "380px")
-			        .attr("x2", "780px")
-			        .attr("y2", "380px");
+			        .attr("x1", h2h.margin + "px")
+			        .attr("y1", (400 - h2h.margin) + "px")
+			        .attr("x2", (800 - h2h.margin) + "px")
+			        .attr("y2", (400 - h2h.margin) + "px");
+
+			        var spacing = this.getHorizontalSpacing(h2h.currentData.length);
 
 					chart.selectAll("line.x_tick")
 	        		.data(h2h.currentData)
@@ -366,18 +379,33 @@ console.log(this.currentData)
 			        .attr("class", "x_tick")
 			        .attr("style", function(d, i)
 			        {
-			        	return (i == 0 || i % 2 == 0 ? "visibility:hidden" : "");
+			        	return (i == 0 || i % 2 == 0 ? "" : "");
 			        })
 			        .attr("x1", function(d, i)
 			        {
-			        	return (20 + (i * Math.floor(760 / h2h.currentData.length ))) + "px";
+			        	return (h2h.margin + (i * spacing)) + "px";
 			        })
-			        .attr("y1", "380px")
+			        .attr("y1", (400 - h2h.margin) + "px")
 			        .attr("x2", function(d, i)
 			        {
-			        	return (20 + (i * Math.floor(760 / h2h.currentData.length ))) + "px";
+			        	return (h2h.margin + (i * spacing)) + "px";
 			        })
-			        .attr("y2", "390px");
+			        .attr("y2", (400 - (h2h.margin - (h2h.margin / 4))) + "px");
+
+			        chart.selectAll("text.x_label")
+	        		.data(h2h.currentData)
+	        		.enter()
+			        .append("text")
+			        .attr("class", "x_label")
+			        .attr("x", function(d, i)
+			        {
+			        	return (h2h.margin + (i * Math.floor((800 - h2h.margin - h2h.margin) / h2h.currentData.length ))) + "px";
+			        })
+			        .attr("y", (400 - (h2h.margin - (h2h.margin / 2))) + "px")
+			        .text(function(d, i) 
+	                {
+	                    return (i == 0 || i % 2 == 0 ? "" : d.season + " / " + (d.season + 1));
+	                });		
 			    },
 				renderAxis_y: function()
 				{
@@ -386,26 +414,51 @@ console.log(this.currentData)
 					chart
 			        .append("line")
 			        .attr("class", "axis_y")
-			        .attr("x1", "20px")
-			        .attr("y1", "20px")
-			        .attr("x2", "20px")
-			        .attr("y2", "380px");	
+			        .attr("x1", h2h.margin + "px")
+			        .attr("y1", h2h.margin + "px")
+			        .attr("x2", h2h.margin + "px")
+			        .attr("y2", (400 - h2h.margin) + "px");
+
+					var max = d3.max(h2h.currentData, function(d) { return (d.score1 > d.score2 ? d.score1 : d.score2);});
+
+					var goalsArr = [];
+					for (var i = 1; i <= max; i++)
+					{
+						goalsArr.push(i);
+					}
+
+			        var spacing = this.getVerticalSpacing(max);
 
 					chart.selectAll("line.y_tick")
-	        		.data([1, 2, 3, 4, 5, 6, 7, 8])
+	        		.data(goalsArr)
 	        		.enter()
 			        .append("line")
 			        .attr("class", "y_tick")
-			        .attr("x1", "20px")
+			        .attr("x1", h2h.margin + "px")
 			        .attr("y1", function(d)
 			        {
-			        	return (380 - (d * 40)) + "px";
+			        	return ((400 - h2h.margin) - (d * spacing)) + "px";
 			        })
-			        .attr("x2", "10px")
+			        .attr("x2", (h2h.margin - (h2h.margin / 4)) + "px")
 			        .attr("y2", function(d)
 			        {
-			        	return (380 - (d * 40)) + "px";
+			        	return ((400 - h2h.margin) - (d * spacing)) + "px";
 			        });
+
+			        chart.selectAll("text.y_label")
+	        		.data(goalsArr)
+	        		.enter()
+			        .append("text")
+			        .attr("class", "y_label")
+			        .attr("x", ((h2h.margin / 2) - 10) + "px")
+			        .attr("y", function(d)
+			        {
+			        	return ((400 - h2h.margin) - (d * spacing) + 5) + "px";
+			        })
+			        .text(function(d) 
+	                {
+	                    return d;
+	                });			        
 				},
 				renderPlots: function()
 				{
