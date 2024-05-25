@@ -66,6 +66,13 @@
                 text-anchor: middle;
 			}
 
+			.nodata
+			{
+      			font: bold 30px arial;
+      			fill: rgba(0, 0, 0, 0.5);
+                text-anchor: middle;
+			}
+
 			.line
 			{
                 stroke-width: 2px;
@@ -351,8 +358,17 @@
 				{
 					var chart = d3.selectAll("#chart");
 					chart.html("");
-console.log(this.currentData)
-					if (this.currentData.length == 0) return;
+
+					if (this.currentData.length == 0) 
+					{
+						chart
+				        .append("text")
+				        .attr("class", "nodata")
+				        .attr("x", "400px")
+				        .attr("y", "200px")
+				        .text("No data. Please select another pair of teams.");
+						return;
+					}
 
 					this.renderAxis_x();
 					this.renderAxis_y();
