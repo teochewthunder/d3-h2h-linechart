@@ -4,7 +4,7 @@
 		<title>Head-to-head Line CHart</title>
 
 		<style>
-			div { outline:  1px solid red; }
+			div { outline: 0px solid red; }
 
 			#teamsContainer
 			{
@@ -73,14 +73,9 @@
                 text-anchor: middle;
 			}
 
-			.line
+			.line1, .line2
 			{
-                stroke-width: 2px;
-			}
-
-			.node
-			{
-				r: 2px;
+                stroke-width: 3px;
 			}
 		</style>
 
@@ -119,9 +114,9 @@
 			{
 				teams: 
 				[
-					{ "name": "Arsenal", "color": "FFAAAA", "logo": "arsenal.png"},
-					{ "name": "Manchester City", "color": "AAFFAA", "logo": "manchestercity.png"},
-					{ "name": "Liverpool", "color": "AA0000", "logo": "liverpool.png"}
+					{ "name": "Arsenal", "color": "rgba(255, 0, 0, 0.5)", "logo": "arsenal.png"},
+					{ "name": "Manchester City", "color": "rgba(100, 200, 255, 0.5)", "logo": "manchestercity.png"},
+					{ "name": "Liverpool", "color": "rgba(150, 0, 0, 0.5)", "logo": "liverpool.png"}
 				],
 				data: 
 				{
@@ -386,7 +381,7 @@
 			        .attr("x2", (800 - h2h.margin) + "px")
 			        .attr("y2", (400 - h2h.margin) + "px");
 
-			        var spacing = this.getHorizontalSpacing(h2h.currentData.length);
+			        var hspacing = this.getHorizontalSpacing(h2h.currentData.length);
 
 					chart.selectAll("line.x_tick")
 	        		.data(h2h.currentData)
@@ -399,12 +394,12 @@
 			        })
 			        .attr("x1", function(d, i)
 			        {
-			        	return (h2h.margin + (i * spacing)) + "px";
+			        	return (h2h.margin + (i * hspacing)) + "px";
 			        })
 			        .attr("y1", (400 - h2h.margin) + "px")
 			        .attr("x2", function(d, i)
 			        {
-			        	return (h2h.margin + (i * spacing)) + "px";
+			        	return (h2h.margin + (i * hspacing)) + "px";
 			        })
 			        .attr("y2", (400 - (h2h.margin - (h2h.margin / 4))) + "px");
 
@@ -436,14 +431,14 @@
 			        .attr("y2", (400 - h2h.margin) + "px");
 
 					var max = d3.max(h2h.currentData, function(d) { return (d.score1 > d.score2 ? d.score1 : d.score2);});
+					var vspacing = this.getVerticalSpacing(max);
 
 					var goalsArr = [];
 					for (var i = 1; i <= max; i++)
 					{
 						goalsArr.push(i);
 					}
-
-			        var spacing = this.getVerticalSpacing(max);
+			        
 
 					chart.selectAll("line.y_tick")
 	        		.data(goalsArr)
@@ -453,12 +448,12 @@
 			        .attr("x1", h2h.margin + "px")
 			        .attr("y1", function(d)
 			        {
-			        	return ((400 - h2h.margin) - (d * spacing)) + "px";
+			        	return ((400 - h2h.margin) - (d * vspacing)) + "px";
 			        })
 			        .attr("x2", (h2h.margin - (h2h.margin / 4)) + "px")
 			        .attr("y2", function(d)
 			        {
-			        	return ((400 - h2h.margin) - (d * spacing)) + "px";
+			        	return ((400 - h2h.margin) - (d * vspacing)) + "px";
 			        });
 
 			        chart.selectAll("text.y_label")
@@ -469,7 +464,7 @@
 			        .attr("x", ((h2h.margin / 2) - 10) + "px")
 			        .attr("y", function(d)
 			        {
-			        	return ((400 - h2h.margin) - (d * spacing) + 5) + "px";
+			        	return ((400 - h2h.margin) - (d * vspacing) + 5) + "px";
 			        })
 			        .text(function(d) 
 	                {
@@ -478,7 +473,100 @@
 				},
 				renderPlots: function()
 				{
-					if (this.currentData.length == 0) return;
+					var chart = d3.selectAll("#chart");
+
+					var max = d3.max(h2h.currentData, function(d) { return (d.score1 > d.score2 ? d.score1 : d.score2);});
+					var vspacing = this.getVerticalSpacing(max);
+			        var hspacing = this.getHorizontalSpacing(h2h.currentData.length);
+
+					var color1 = h2h.teams.filter((x) => {return x.name == d3.select("#ddlTeam1").node().value;} )[0].color; 
+					var color2 = h2h.teams.filter((x) => {return x.name == d3.select("#ddlTeam2").node().value;} )[0].color; 
+
+			        chart.selectAll("circle.node1")
+	        		.data(h2h.currentData)
+	        		.enter()
+			        .append("circle")
+			        .attr("class", "node1")
+			        .attr("fill", color1)	
+			        .attr("r", "5px")
+			        .attr("cx", function(d, i) 
+	                {
+	                    return (h2h.margin + (i * hspacing) + (hspacing / 2)) + "px";
+	                })
+			        .attr("cy", function(d) 
+	                {
+	                    return ((400 - h2h.margin) - (d.score1 * vspacing)) + "px";
+	                });	
+
+			        chart.selectAll("circle.node2")
+	        		.data(h2h.currentData)
+	        		.enter()
+			        .append("circle")
+			        .attr("class", "node2")
+			        .attr("fill", color2)	
+			        .attr("r", "5px")
+			        .attr("cx", function(d, i) 
+	                {
+	                    return (h2h.margin + (i * hspacing) + (hspacing / 2)) + "px";
+	                })
+			        .attr("cy", function(d) 
+	                {
+	                    return ((400 - h2h.margin) - (d.score2 * vspacing)) + "px";
+	                });	
+
+			        chart.selectAll("line.line1")
+	        		.data(h2h.currentData)
+	        		.enter()
+			        .append("line")
+			        .attr("class", "line1")
+			        .attr("stroke", color1)	
+			        .attr("x1", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return (h2h.margin + (i * hspacing) + (hspacing / 2)) + "px";
+	                })
+			        .attr("y1", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return ((400 - h2h.margin) - (d.score1 * vspacing)) + "px";
+	                })
+	                .attr("x2", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return (h2h.margin + ((i - 1) * hspacing) + (hspacing / 2)) + "px";
+	                })
+			        .attr("y2", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return ((400 - h2h.margin) - (h2h.currentData[i - 1].score1 * vspacing)) + "px";
+	                });
+
+			        chart.selectAll("line.line2")
+	        		.data(h2h.currentData)
+	        		.enter()
+			        .append("line")
+			        .attr("class", "line2")
+			        .attr("stroke", color2)	
+			        .attr("x1", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return (h2h.margin + (i * hspacing) + (hspacing / 2)) + "px";
+	                })
+			        .attr("y1", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return ((400 - h2h.margin) - (d.score2 * vspacing)) + "px";
+	                })
+	                .attr("x2", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return (h2h.margin + ((i - 1) * hspacing) + (hspacing / 2)) + "px";
+	                })
+			        .attr("y2", function(d, i) 
+	                {
+	                	if (i == 0) return "0px";
+	                    return ((400 - h2h.margin) - (h2h.currentData[i - 1].score2 * vspacing)) + "px";
+	                });		
 				}
 			};
 
