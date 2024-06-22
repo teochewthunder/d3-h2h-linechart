@@ -14,7 +14,23 @@ Goals are represented as a JSON object. It is divided into seasons.
     - `goals`: Goals scored.
  
 ## HTML/CSS
+- dashboard containing two drop-down lists.
+    - These have the same options - the names of the teams whose head-to-head record will be compared. Comparing two identical teams will result in a failure message.
+    - Changing the value will result in different logos being displayed.
+- chart area which houses the SVG that will be generated.
 
 ## JavaScript
-
+- properties
+    - `teams`: (see section `Data` above).
+    - `data`: (see section `Data` above).
+    - `currentData`: a subset of `data` used for visualization, an empty array by default.
+    - `margin`: An integer used to determine the amount ofspacing around the borders of the chart.
+-  methods
+    - xx
+    - xx
+    - xx
+    - xx
+    - xx
+    - xx
+ 
 ## Chart
