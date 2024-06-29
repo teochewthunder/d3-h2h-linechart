@@ -26,6 +26,12 @@ Goals are represented as a JSON object. It is divided into seasons.
     - `currentData`: a subset of `data` used for visualization, an empty array by default.
     - `margin`: An integer used to determine the amount ofspacing around the borders of the chart.
 -  methods
+    - `getData`: Gets the values of the two drop-down lists, and populates a dataset based on the two teams selected, then sets the result to `currentData`.
+    - `getHorizontalSpacing`: Use `margin` and the number of data points in `currentData` to determine how much horizontal space each data point can use.
+    - `getVerticalSpacing`:  Use `margin` and the maximum data value in `currentData` to determine how much vertical space each data value can use.
+    - `changeTeams`: Change logos based on teams selected from the drop-down lists.
+    - xx
+    - xx
     - xx
     - xx
     - xx
