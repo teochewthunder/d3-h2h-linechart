@@ -30,9 +30,10 @@ Goals are represented as a JSON object. It is divided into seasons.
     - `getHorizontalSpacing`: Use `margin` and the number of data points in `currentData` to determine how much horizontal space each data point can use.
     - `getVerticalSpacing`:  Use `margin` and the maximum data value in `currentData` to determine how much vertical space each data value can use.
     - `changeTeams`: Change logos based on teams selected from the drop-down lists.
-    - xx
-    - xx
-    - xx
+    - `renderLineChart`: Parent method for assembling the line chart. First determines if the two teams selected are the same, and if so, displays an error message.
+        - `renderAxis_x`: Renders the x-axis with season labels.
+        - `renderAxis_y`: Renders the y-axis with possible values.
+        - `renderPlots`: Renders the plots. Nodes and lines are rendered with the color depending on the teams selected.
     - xx
     - xx
     - xx
