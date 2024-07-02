@@ -1,4 +1,4 @@
-# d3-h2h-linechart (in progress)
+# d3 Head-to-head Line Chart
 A dynamic line chart that plots goals scored between teams in head-to-head encounters.
 
 ## Data 
